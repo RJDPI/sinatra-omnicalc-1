@@ -24,17 +24,18 @@ get("/payment/new") do
 end
 
 get("/payment/results") do
-  
   @principal = params.fetch("users_principal").to_f
-  @apr = params.fetch("users_apr").to_f / 100
+  @apr =((params.fetch("users_apr").to_f) /12)/ 100
   @years = params.fetch("users_year").to_f * 12
 
   @top = @apr * (@principal)
   @bottom = 1 - ((1 + @apr) ** (-1 * @years))
 
   @payment = @top / @bottom
+  
   erb(:payment_calc_results)
 end
+
 
 
 get("/square/new") do
